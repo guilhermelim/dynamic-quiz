@@ -9,11 +9,15 @@ export default function MyDocument(props) {
   const { emotionStyleTags } = props;
 
   return (
-    <Html lang="en">
+    <Html lang="pt-BR">
       <Head>
         {/* PWA primary color */}
         <meta name="theme-color" content={theme.palette.primary.main} />
         <link rel="shortcut icon" href="/favicon.ico" />
+        <meta
+          name="description"
+          content="Site de quiz 'Teste Estilo de Liderança'"
+        />
         <meta name="emotion-insertion-point" content="" />
         {emotionStyleTags}
       </Head>

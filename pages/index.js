@@ -1,4 +1,5 @@
 import * as React from "react";
+import Head from "next/head";
 import Copyright from "../src/Copyright";
 import Quiz from "../src/components/Quiz";
 import {
@@ -76,6 +77,9 @@ export default function Index() {
 
   return (
     <Container maxWidth="md">
+      <Head>
+        <title>Teste Estilo de Liderança</title>
+      </Head>
       <Box sx={{ my: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom align="center">
           Teste Estilo de Liderança
