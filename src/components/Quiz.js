@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useForm } from "react-hook-form";
 import {
   Container,
   Box,
@@ -13,27 +14,17 @@ import {
 } from "@mui/material";
 
 const Quiz = ({ titulo, perguntas, onResultChange }) => {
-  const [answers, setAnswers] = React.useState(
-    Array(perguntas.length).fill(null)
-  );
+  const { register, watch, setValue } = useForm();
+  const answersWatched = watch();
   const [total, setTotal] = React.useState(0);
 
   React.useEffect(() => {
-    const newTotal = answers.reduce(
-      (acc, curr) => acc + (curr ? parseInt(curr, 10) : 0),
-      0
-    );
+    const newTotal = perguntas
+      .map((_, index) => answersWatched[`pergunta-${titulo}-${index}`])
+      .reduce((acc, curr) => acc + (curr ? parseInt(curr, 10) : 0), 0);
     setTotal(newTotal);
-
-    // Informar o Index da nova pontuação
     onResultChange(newTotal);
-  }, [answers]);
-
-  const handleAnswerChange = (index, newValue) => {
-    const newAnswers = [...answers];
-    newAnswers[index] = newValue;
-    setAnswers(newAnswers);
-  };
+  }, [answersWatched, titulo, perguntas, onResultChange]);
 
   return (
     <Card elevation={3} style={{ marginTop: "20px" }}>
@@ -49,34 +40,46 @@ const Quiz = ({ titulo, perguntas, onResultChange }) => {
                   <FormLabel component="legend">{pergunta}</FormLabel>
                   <RadioGroup
                     row
-                    aria-label={`pergunta-${index}`}
-                    name={`pergunta-${index}`}
-                    value={answers[index] || ""}
-                    onChange={(e) => handleAnswerChange(index, e.target.value)}
+                    aria-label={`pergunta-${titulo}-${index}`}
+                    name={`pergunta-${titulo}-${index}`}
+                    value={answersWatched[`pergunta-${titulo}-${index}`] || ""}
+                    onChange={(e) =>
+                      setValue(`pergunta-${titulo}-${index}`, e.target.value)
+                    }
                   >
                     <FormControlLabel
                       value="1"
-                      control={<Radio />}
+                      control={
+                        <Radio {...register(`pergunta-${titulo}-${index}`)} />
+                      }
                       label="Nunca"
                     />
                     <FormControlLabel
                       value="2"
-                      control={<Radio />}
+                      control={
+                        <Radio {...register(`pergunta-${titulo}-${index}`)} />
+                      }
                       label="Pouco"
                     />
                     <FormControlLabel
                       value="3"
-                      control={<Radio />}
+                      control={
+                        <Radio {...register(`pergunta-${titulo}-${index}`)} />
+                      }
                       label="Medianamente"
                     />
                     <FormControlLabel
                       value="4"
-                      control={<Radio />}
+                      control={
+                        <Radio {...register(`pergunta-${titulo}-${index}`)} />
+                      }
                       label="Muito"
                     />
                     <FormControlLabel
                       value="5"
-                      control={<Radio />}
+                      control={
+                        <Radio {...register(`pergunta-${titulo}-${index}`)} />
+                      }
                       label="Sempre"
                     />
                   </RadioGroup>
