@@ -117,12 +117,12 @@ export default function Index() {
               <Typography variant="body1">
                 Intensidade de cada estilo de liderança em sua personalidade.
               </Typography>
-              {results.map((result, idx) => (
+              {/* {results.map((result, idx) => (
                 <Typography key={idx} variant="body2">
                   Soma {quizes[idx].titulo}:{" "}
                   {generateLeadershipStyle(result.score)} ({result.score})
                 </Typography>
-              ))}
+              ))} */}
               <Typography variant="body1" sx={{ pt: 2 }}>
                 Fonte de pesquisa: Extraído do livro Gente de resultados,
                 escrito por Eduardo Ferraz
@@ -162,6 +162,13 @@ export default function Index() {
                   {result.score})
                 </Typography>
               ))}
+
+              {results.some((result) => result.score < 33) && (
+                <Typography variant="body2" color="primary" sx={{ pt: 1 }}>
+                  Há indicação de que seu estilo é misto pois nenhum estilo
+                  ultrapassou 33 pontos.
+                </Typography>
+              )}
               <Button
                 variant="contained"
                 color="primary"
